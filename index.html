@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Report Dashboard</title>
+<style>
+:root{
+  --navy:#2B567B; --orange:#E0653C; --bg:#f5f7fa; --card:#fff;
+  --text:#1f2937; --muted:#7b8794; --line:#e7ebef; --success:#2e9d68;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea,select{font:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0}
+.brand{display:flex;align-items:center;gap:12px;padding:0 10px 30px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--navy),#3c759f);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand strong{font-size:18px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.nav{display:grid;gap:7px}
+.nav button{border:0;background:transparent;text-align:left;padding:12px 14px;border-radius:11px;color:#66727e;cursor:pointer}
+.nav button.active,.nav button:hover{background:#edf4f8;color:var(--navy);font-weight:600}
+.main{margin-left:250px;width:calc(100% - 250px);padding:32px 38px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+h1{margin:0;font-size:28px;letter-spacing:-.5px}.subtitle{color:var(--muted);margin-top:6px}
+.primary{border:0;background:var(--orange);color:white;padding:12px 18px;border-radius:11px;font-weight:700;cursor:pointer;box-shadow:0 7px 18px #e0653c2e}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #172b3d08}
+.stat-label{color:var(--muted);font-size:13px}.stat-value{font-size:28px;font-weight:750;margin-top:9px}.accent{color:var(--orange)}
+.content{display:grid;grid-template-columns:1.35fr .65fr;gap:20px}
+.section-title{font-size:17px;font-weight:700;margin-bottom:16px}
+.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-weight:600}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:700;background:#edf8f2;color:var(--success)}
+.quick{display:grid;gap:12px}.quick-item{border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;background:#fff}.quick-item:hover{border-color:#b8cad8}
+.modal{position:fixed;inset:0;background:#11182780;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.show{display:flex}
+.modal-box{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:26px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.close{border:0;background:#f1f3f5;width:34px;height:34px;border-radius:50%;cursor:pointer}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field.full{grid-column:1/-1}.field label{display:block;font-size:12px;color:#687582;margin-bottom:7px;font-weight:600}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe5ea;border-radius:10px;padding:11px 12px;outline:none;background:#fff}.field textarea{min-height:105px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px #2b567b15}
+.drop{border:1.5px dashed #cbd5dd;border-radius:12px;padding:22px;text-align:center;color:var(--muted);cursor:pointer}.preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.preview img{width:90px;height:70px;object-fit:cover;border-radius:8px}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.secondary{border:1px solid var(--line);background:#fff;padding:11px 17px;border-radius:10px;cursor:pointer}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.content{grid-template-columns:1fr}}
+@media(max-width:700px){.sidebar{width:72px;padding:20px 10px}.brand div:last-child,.nav button span{display:none}.main{margin-left:72px;width:calc(100% - 72px);padding:22px 16px}.grid{grid-template-columns:1fr 1fr}.topbar{align-items:flex-start;gap:12px}.topbar .primary{white-space:nowrap}}
+
+@media print{
+  @page{size:A4;margin:12mm}
+  .sidebar,.topbar,.grid,.quick,.primary,.secondary,.modal{display:none!important}
+  .main{margin:0;width:100%;padding:0}
+  body{background:#fff}
+  .content{display:block}
+  .card{box-shadow:none;border:0;padding:0}
+  .table th,.table td{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">AR</div><div><strong>Work Report</strong><span>WORK MANAGEMENT</span></div></div>
+    <nav class="nav">
+      <button class="active" onclick="setPage(this)">▦ <span>Dashboard</span></button>
+      <button onclick="openModal()">＋ <span>เพิ่มรายงาน</span></button>
+      <button onclick="setPage(this)">◷ <span>ประวัติงาน</span></button>
+      <button onclick="setPage(this)">▣ <span>ปฏิทิน</span></button>
+      <button onclick="setPage(this)">⚙ <span>ตั้งค่า</span></button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><h1>รายงานการทำงาน</h1><div class="subtitle">จัดการและติดตามงานของคุณในที่เดียว</div></div>
+      <div style="display:flex;gap:8px">
+<button class="secondary" onclick="printAllReports()">🖨️ พิมพ์ A4</button>
+<button class="primary" onclick="openModal()">＋ เพิ่มรายงาน</button>
+</div>
+    </div>
+
+    <section class="grid">
+      <div class="card"><div class="stat-label">งานทั้งหมด</div><div class="stat-value" id="total">0</div></div>
+      <div class="card"><div class="stat-label">งานเสร็จแล้ว</div><div class="stat-value" id="done">0</div></div>
+      <div class="card"><div class="stat-label">กำลังทำ</div><div class="stat-value" id="working">0</div></div>
+      <div class="card"><div class="stat-label">เวลาทำงานรวม</div><div class="stat-value accent" id="hours">0 ชม.</div></div>
+    </section>
+
+    <section class="content">
+      <div class="card">
+        <div class="section-title">งานล่าสุด</div>
+        <table class="table">
+          <thead><tr><th>วันที่</th><th>ชื่องาน</th><th>เวลา</th><th>สถานะ</th><th>พิมพ์</th></tr></thead>
+          <tbody id="reportTable"><tr><td colspan="5" style="color:#9aa4ad;text-align:center;padding:30px">ยังไม่มีรายงาน — กด “เพิ่มรายงาน” เพื่อเริ่มต้น</td></tr></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="section-title">ทางลัด</div>
+        <div class="quick">
+          <div class="quick-item" onclick="openModal()">📝 <strong>สร้างรายงานใหม่</strong><br><small style="color:#89939d">บันทึกงานพร้อมรูปภาพ</small></div>
+          <div class="quick-item">📅 <strong>ดูปฏิทินงาน</strong><br><small style="color:#89939d">วางแผนและตรวจสอบงาน</small></div>
+          <div class="quick-item">📊 <strong>สรุปผลการทำงาน</strong><br><small style="color:#89939d">ดูสถิติและเวลาที่ใช้</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head"><div><h2 style="margin:0">เพิ่มรายงานการทำงาน</h2><div class="subtitle">กรอกข้อมูลของงานที่ต้องการบันทึก</div></div><button class="close" onclick="closeModal()">×</button></div>
+    <form id="form" class="form">
+      <div class="field"><label>วันที่</label><input id="date" type="date" required></div>
+      <div class="field"><label>ประเภทงาน</label><select id="type"><option>Graphic Design</option><option>Social Media</option><option>Event</option><option>Signage</option><option>Other</option></select></div>
+      <div class="field"><label>เวลาเริ่ม</label><input id="start" type="time" required></div>
+      <div class="field"><label>เวลาสิ้นสุด</label><input id="end" type="time" required></div>
+      <div class="field full"><label>ชื่องาน</label><input id="title" placeholder="เช่น ออกแบบ Artwork โปรโมชั่นร้านค้า" required></div>
+      <div class="field full"><label>รายละเอียด</label><textarea id="detail" placeholder="รายละเอียดงาน / สิ่งที่ทำ / หมายเหตุ"></textarea></div>
+      <div class="field full"><label>สถานะ</label><select id="status"><option>เสร็จแล้ว</option><option>กำลังทำ</option><option>รอแก้ไข</option></select></div>
+      <div class="field full"><label>รูปภาพผลงาน</label><div class="drop" onclick="document.getElementById('images').click()">📷 คลิกเพื่อเลือกรูปภาพ หรือ ลากไฟล์มาวางที่นี่<input id="images" type="file" accept="image/*" multiple hidden></div><div class="preview" id="preview"></div></div>
+      <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">ยกเลิก</button><button class="primary" type="submit">บันทึกรายงาน</button></div>
+    </form>
+  </div>
+</div>
+
+<script>
+let reports = JSON.parse(localStorage.getItem('workReports') || '[]');
+const $=id=>document.getElementById(id);
+$('date').valueAsDate=new Date();
+
+function openModal(){ $('modal').classList.add('show'); }
+function closeModal(){ $('modal').classList.remove('show'); }
+function setPage(btn){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
+$('images').addEventListener('change',e=>{
+  $('preview').innerHTML='';
+  [...e.target.files].forEach(file=>{const r=new FileReader();r.onload=x=>{$('preview').innerHTML+=`<img src="${x.target.result}">`};r.readAsDataURL(file)})
+});
+$('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const start=$('start').value,end=$('end').value;
+  let mins=0;if(start&&end){let a=start.split(':').map(Number),b=end.split(':').map(Number);mins=(b[0]*60+b[1])-(a[0]*60+a[1]);if(mins<0)mins+=1440}
+  reports.unshift({date:$('date').value,title:$('title').value,type:$('type').value,start,end,mins,status:$('status').value});
+  localStorage.setItem('workReports',JSON.stringify(reports));render();e.target.reset();$('date').valueAsDate=new Date();$('preview').innerHTML='';closeModal();
+});
+
+function printReport(index){
+  const r=reports[index];
+  if(!r)return;
+  const w=window.open('','_blank');
+  const date=new Date(r.date+'T00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const duration=r.mins?`${Math.floor(r.mins/60)} ชั่วโมง ${r.mins%60} นาที`:'-';
+  w.document.write(`<!doctype html><html lang="th"><head><meta charset="UTF-8"><title>รายงานการทำงาน - ${escapeHtml(r.title)}</title>
+  <style>
+  @page{size:A4;margin:16mm}*{box-sizing:border-box}body{font-family:"Segoe UI",Tahoma,sans-serif;color:#202a33;margin:0;font-size:14px}
+  .head{border-bottom:3px solid #2B567B;padding-bottom:14px;margin-bottom:24px}.brand{font-size:24px;font-weight:800;color:#2B567B}.sub{color:#7b8794;margin-top:4px}
+  h1{font-size:22px;margin:20px 0 16px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+  .box{border:1px solid #dfe5ea;border-radius:8px;padding:12px}.label{font-size:11px;color:#7b8794;margin-bottom:5px}.value{font-weight:600}
+  .detail{border:1px solid #dfe5ea;border-radius:8px;padding:16px;min-height:130px;white-space:pre-wrap;line-height:1.7}
+  .status{display:inline-block;border:1px solid #b9d8c8;padding:4px 10px;border-radius:20px;font-size:12px}
+  .footer{margin-top:45px;display:grid;grid-template-columns:1fr 1fr;gap:60px;text-align:center}.line{border-top:1px solid #888;margin-top:55px;padding-top:8px}
+  .print-note{font-size:11px;color:#8a949d;text-align:right;margin-top:20px}
+  </style></head><body>
+  <div class="head"><div class="brand">WORK REPORT</div><div class="sub">รายงานการทำงาน</div></div>
+  <h1>${escapeHtml(r.title)}</h1>
+  <div class="meta">
+    <div class="box"><div class="label">วันที่</div><div class="value">${date}</div></div>
+    <div class="box"><div class="label">ประเภทงาน</div><div class="value">${escapeHtml(r.type)}</div></div>
+    <div class="box"><div class="label">เวลาเริ่ม - สิ้นสุด</div><div class="value">${r.start} - ${r.end}</div></div>
+    <div class="box"><div class="label">ระยะเวลาทำงาน</div><div class="value">${duration}</div></div>
+    <div class="box"><div class="label">สถานะ</div><div class="value"><span class="status">${escapeHtml(r.status)}</span></div></div>
+  </div>
+  <h3>รายละเอียดการทำงาน</h3><div class="detail">${escapeHtml(r.detail||'-')}</div>
+  <div class="footer"><div class="line">ผู้จัดทำรายงาน</div><div class="line">ผู้ตรวจสอบ / ผู้รับรายงาน</div></div>
+  <div class="print-note">จัดทำจากระบบ Work Report</div>
+  <script>window.onload=()=>window.print();</script></body></html>`);
+  w.document.close();
+}
+function printAllReports(){
+  if(!reports.length){alert('ยังไม่มีรายงานให้พิมพ์');return;}
+  const w=window.open('','_blank');
+  const total=reports.reduce((a,r)=>a+(r.mins||0),0);
+  const rows=reports.map((r,i)=>`<tr><td>${i+1}</td><td>${new Date(r.date+'T00:00').toLocaleDateString('th-TH')}</td><td>${escapeHtml(r.title)}</td><td>${escapeHtml(r.type)}</td><td>${r.start}-${r.end}</td><td>${r.mins?Math.floor(r.mins/60)+' ชม. '+r.mins%60+' นาที':'-'}</td><td>${escapeHtml(r.status)}</td></tr>`).join('');
+  w.document.write(`<!doctype html><html lang="th"><head><meta charset="UTF-8"><title>สรุปรายงานการทำงาน</title>
+  <style>@page{size:A4 landscape;margin:12mm}body{font-family:"Segoe UI",Tahoma,sans-serif;color:#202a33;font-size:11px}.head{border-bottom:3px solid #2B567B;padding-bottom:10px}.brand{font-size:22px;font-weight:800;color:#2B567B}.sub{color:#7b8794}h2{margin:18px 0 8px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #d8dee3;padding:7px;text-align:left}th{background:#eef3f6}tfoot td{font-weight:700}.summary{margin:10px 0 18px;color:#4d5963}</style></head><body>
+  <div class="head"><div class="brand">WORK REPORT</div><div class="sub">สรุปรายงานการทำงาน</div></div>
+  <h2>สรุปการทำงาน</h2><div class="summary">จำนวนงานทั้งหมด: ${reports.length} รายการ &nbsp; | &nbsp; เวลาทำงานรวม: ${Math.floor(total/60)} ชั่วโมง ${total%60} นาที</div>
+  <table><thead><tr><th>#</th><th>วันที่</th><th>ชื่องาน</th><th>ประเภท</th><th>เวลา</th><th>ระยะเวลา</th><th>สถานะ</th></tr></thead><tbody>${rows}</tbody></table>
+  <script>window.onload=()=>window.print();</script></body></html>`);
+  w.document.close();
+}
+
+function render(){
+ $('total').textContent=reports.length;
+ $('done').textContent=reports.filter(r=>r.status==='เสร็จแล้ว').length;
+ $('working').textContent=reports.filter(r=>r.status==='กำลังทำ').length;
+ const total=reports.reduce((a,r)=>a+(r.mins||0),0);$('hours').textContent=(total/60).toFixed(1)+' ชม.';
+ $('reportTable').innerHTML=reports.length?reports.slice(0,8).map((r,i)=>`<tr><td>${new Date(r.date+'T00:00').toLocaleDateString('th-TH')}</td><td><strong>${escapeHtml(r.title)}</strong><br><small style="color:#9aa4ad">${r.type}</small></td><td>${r.start} - ${r.end}</td><td><span class="badge" style="${r.status!=='เสร็จแล้ว'?'background:#fff5e9;color:#d27a1e':''}">${r.status}</span></td><td><button class="secondary" style="padding:6px 9px;font-size:12px" onclick="printReport(${i})">🖨️</button></td></tr>`).join(''):'<tr><td colspan="5" style="color:#9aa4ad;text-align:center;padding:30px">ยังไม่มีรายงาน — กด “เพิ่มรายงาน” เพื่อเริ่มต้น</td></tr>';
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+render();
+</script>
+</body>
+</html>
