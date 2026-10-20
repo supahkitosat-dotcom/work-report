@@ -2,197 +2,165 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Report Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Work Report</title>
 <style>
-:root{
-  --navy:#2B567B; --orange:#E0653C; --bg:#f5f7fa; --card:#fff;
-  --text:#1f2937; --muted:#7b8794; --line:#e7ebef; --success:#2e9d68;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--text)}
-button,input,textarea,select{font:inherit}
-.app{display:flex;min-height:100vh}
-.sidebar{width:250px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0}
-.brand{display:flex;align-items:center;gap:12px;padding:0 10px 30px}
-.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--navy),#3c759f);color:#fff;display:grid;place-items:center;font-weight:800}
-.brand strong{font-size:18px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.nav{display:grid;gap:7px}
-.nav button{border:0;background:transparent;text-align:left;padding:12px 14px;border-radius:11px;color:#66727e;cursor:pointer}
-.nav button.active,.nav button:hover{background:#edf4f8;color:var(--navy);font-weight:600}
-.main{margin-left:250px;width:calc(100% - 250px);padding:32px 38px}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
-h1{margin:0;font-size:28px;letter-spacing:-.5px}.subtitle{color:var(--muted);margin-top:6px}
-.primary{border:0;background:var(--orange);color:white;padding:12px 18px;border-radius:11px;font-weight:700;cursor:pointer;box-shadow:0 7px 18px #e0653c2e}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #172b3d08}
-.stat-label{color:var(--muted);font-size:13px}.stat-value{font-size:28px;font-weight:750;margin-top:9px}.accent{color:var(--orange)}
-.content{display:grid;grid-template-columns:1.35fr .65fr;gap:20px}
-.section-title{font-size:17px;font-weight:700;margin-bottom:16px}
-.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-weight:600}
-.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:700;background:#edf8f2;color:var(--success)}
-.quick{display:grid;gap:12px}.quick-item{border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;background:#fff}.quick-item:hover{border-color:#b8cad8}
-.modal{position:fixed;inset:0;background:#11182780;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.show{display:flex}
-.modal-box{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:26px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.close{border:0;background:#f1f3f5;width:34px;height:34px;border-radius:50%;cursor:pointer}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field.full{grid-column:1/-1}.field label{display:block;font-size:12px;color:#687582;margin-bottom:7px;font-weight:600}.field input,.field select,.field textarea{width:100%;border:1px solid #dfe5ea;border-radius:10px;padding:11px 12px;outline:none;background:#fff}.field textarea{min-height:105px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px #2b567b15}
-.drop{border:1.5px dashed #cbd5dd;border-radius:12px;padding:22px;text-align:center;color:var(--muted);cursor:pointer}.preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.preview img{width:90px;height:70px;object-fit:cover;border-radius:8px}
-.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.secondary{border:1px solid var(--line);background:#fff;padding:11px 17px;border-radius:10px;cursor:pointer}
-@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.content{grid-template-columns:1fr}}
-@media(max-width:700px){.sidebar{width:72px;padding:20px 10px}.brand div:last-child,.nav button span{display:none}.main{margin-left:72px;width:calc(100% - 72px);padding:22px 16px}.grid{grid-template-columns:1fr 1fr}.topbar{align-items:flex-start;gap:12px}.topbar .primary{white-space:nowrap}}
-
-@media print{
-  @page{size:A4;margin:12mm}
-  .sidebar,.topbar,.grid,.quick,.primary,.secondary,.modal{display:none!important}
-  .main{margin:0;width:100%;padding:0}
-  body{background:#fff}
-  .content{display:block}
-  .card{box-shadow:none;border:0;padding:0}
-  .table th,.table td{font-size:11px}
-}
+:root{--navy:#2B567B;--orange:#E0653C;--bg:#f5f7fa;--card:#fff;--text:#1f2937;--muted:#7b8794;--line:#e5e9ed;--green:#2e9d68;--red:#c94b4b}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--text)}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--line);position:fixed;inset:0 auto 0 0;padding:24px 16px;z-index:5}
+.brand{display:flex;gap:11px;align-items:center;padding:4px 9px 28px}.logo{width:42px;height:42px;border-radius:12px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}.brand b{font-size:17px}.brand small{display:block;color:var(--muted);margin-top:2px}
+.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;padding:12px 13px;border-radius:11px;text-align:left;color:#687582}.nav button.active,.nav button:hover{background:#edf4f8;color:var(--navy);font-weight:700}
+.main{margin-left:245px;width:calc(100% - 245px);padding:30px 36px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}h1{font-size:27px;margin:0}.sub{color:var(--muted);margin-top:5px}.actions{display:flex;gap:9px}
+.primary,.secondary,.danger{border-radius:10px;padding:10px 15px;font-weight:700}.primary{border:0;background:var(--orange);color:#fff}.secondary{border:1px solid var(--line);background:#fff;color:#394650}.danger{border:0;background:#fff1f1;color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:0 5px 18px #172b3d08}.label{color:var(--muted);font-size:12px}.value{font-size:28px;font-weight:800;margin-top:7px}.orange{color:var(--orange)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.panel-title{font-weight:800;font-size:17px}
+table{width:100%;border-collapse:collapse}th,td{padding:12px 9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{color:var(--muted);font-weight:700}.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#edf8f2;color:var(--green);font-size:11px;font-weight:700}.badge.work{background:#fff4e9;color:#c6781a}.badge.plan{background:#eef1f5;color:#65717c}
+.empty{text-align:center;color:var(--muted);padding:38px 10px}.view{display:none}.view.active{display:block}
+.searchbar{display:flex;gap:10px;margin-bottom:15px}.searchbar input,.searchbar select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;outline:none}.searchbar input{flex:1}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.cal-head{text-align:center;color:var(--muted);font-size:12px;padding:7px}.day{min-height:95px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}.day.muted{opacity:.45}.day.today{border:2px solid var(--orange)}.day strong{font-size:12px}.dot{display:block;margin-top:6px;font-size:10px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal{position:fixed;inset:0;background:#11182788;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.modalbox{width:min(800px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:24px}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.close{border:0;background:#f1f3f5;border-radius:50%;width:34px;height:34px;font-size:20px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.field label{display:block;font-size:12px;color:#687582;font-weight:700;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid #dce3e8;border-radius:10px;padding:10px 11px;outline:none}.field textarea{min-height:110px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px #2b567b14}
+.drop{border:1.5px dashed #cbd5dd;border-radius:12px;padding:18px;text-align:center;color:var(--muted)}.drop input{display:none}.previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.previews img{width:88px;height:70px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.modalactions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
+.setting{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.setting:last-child{border-bottom:0}.setting b{display:block}.setting small{color:var(--muted)}
+.toast{position:fixed;right:22px;bottom:22px;background:#202a33;color:#fff;padding:12px 16px;border-radius:10px;display:none;z-index:50}
+@media(max-width:900px){.sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px);padding:22px}.stats{grid-template-columns:repeat(2,1fr)}.content{overflow:auto}}@media(max-width:650px){.sidebar{position:static;width:100%;height:auto}.app{display:block}.main{margin-left:0;width:100%;padding:16px}.nav{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start}.stats{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.full{grid-column:auto}.top .actions .secondary{display:none}}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="logo">AR</div><div><strong>Work Report</strong><span>WORK MANAGEMENT</span></div></div>
-    <nav class="nav">
-      <button class="active" onclick="setPage(this)">▦ <span>Dashboard</span></button>
-      <button onclick="openModal()">＋ <span>เพิ่มรายงาน</span></button>
-      <button onclick="setPage(this)">◷ <span>ประวัติงาน</span></button>
-      <button onclick="setPage(this)">▣ <span>ปฏิทิน</span></button>
-      <button onclick="setPage(this)">⚙ <span>ตั้งค่า</span></button>
-    </nav>
-  </aside>
+<aside class="sidebar">
+  <div class="brand"><div class="logo">WR</div><div><b>Work Report</b><small>Personal Dashboard</small></div></div>
+  <nav class="nav">
+    <button class="active" data-view="dashboard">▦ &nbsp; Dashboard</button>
+    <button data-view="reports">☷ &nbsp; ประวัติงาน</button>
+    <button data-view="calendar">▣ &nbsp; ปฏิทิน</button>
+    <button data-view="settings">⚙ &nbsp; ตั้งค่า</button>
+  </nav>
+</aside>
 
-  <main class="main">
-    <div class="topbar">
-      <div><h1>รายงานการทำงาน</h1><div class="subtitle">จัดการและติดตามงานของคุณในที่เดียว</div></div>
-      <div style="display:flex;gap:8px">
-<button class="secondary" onclick="printAllReports()">🖨️ พิมพ์ A4</button>
-<button class="primary" onclick="openModal()">＋ เพิ่มรายงาน</button>
-</div>
+<main class="main">
+  <section id="dashboard" class="view active">
+    <div class="top"><div><h1>Dashboard</h1><div class="sub">สรุปการทำงานของคุณ</div></div><div class="actions"><button class="secondary" onclick="printAll()">🖨️ พิมพ์ A4</button><button class="primary" onclick="openForm()">＋ เพิ่มรายงาน</button></div></div>
+    <div class="stats">
+      <div class="card"><div class="label">งานทั้งหมด</div><div class="value" id="statTotal">0</div></div>
+      <div class="card"><div class="label">เสร็จแล้ว</div><div class="value" id="statDone">0</div></div>
+      <div class="card"><div class="label">กำลังทำ</div><div class="value" id="statWork">0</div></div>
+      <div class="card"><div class="label">เวลาทำงานรวม</div><div class="value orange" id="statHours">0.0 ชม.</div></div>
     </div>
+    <div class="panel"><div class="panel-head"><div class="panel-title">งานล่าสุด</div><button class="secondary" onclick="showView('reports')">ดูทั้งหมด</button></div><div id="dashTable"></div></div>
+  </section>
 
-    <section class="grid">
-      <div class="card"><div class="stat-label">งานทั้งหมด</div><div class="stat-value" id="total">0</div></div>
-      <div class="card"><div class="stat-label">งานเสร็จแล้ว</div><div class="stat-value" id="done">0</div></div>
-      <div class="card"><div class="stat-label">กำลังทำ</div><div class="stat-value" id="working">0</div></div>
-      <div class="card"><div class="stat-label">เวลาทำงานรวม</div><div class="stat-value accent" id="hours">0 ชม.</div></div>
-    </section>
+  <section id="reports" class="view">
+    <div class="top"><div><h1>ประวัติงาน</h1><div class="sub">ค้นหา แก้ไข ลบ และพิมพ์รายงาน</div></div><button class="primary" onclick="openForm()">＋ เพิ่มรายงาน</button></div>
+    <div class="searchbar"><input id="search" placeholder="ค้นหาชื่องาน / รายละเอียด / ประเภท..." oninput="renderReports()"><select id="filterStatus" onchange="renderReports()"><option value="">ทุกสถานะ</option><option>เสร็จแล้ว</option><option>กำลังทำ</option><option>วางแผน</option></select></div>
+    <div class="panel"><div id="reportsTable"></div></div>
+  </section>
 
-    <section class="content">
-      <div class="card">
-        <div class="section-title">งานล่าสุด</div>
-        <table class="table">
-          <thead><tr><th>วันที่</th><th>ชื่องาน</th><th>เวลา</th><th>สถานะ</th><th>พิมพ์</th></tr></thead>
-          <tbody id="reportTable"><tr><td colspan="5" style="color:#9aa4ad;text-align:center;padding:30px">ยังไม่มีรายงาน — กด “เพิ่มรายงาน” เพื่อเริ่มต้น</td></tr></tbody>
-        </table>
-      </div>
-      <div class="card">
-        <div class="section-title">ทางลัด</div>
-        <div class="quick">
-          <div class="quick-item" onclick="openModal()">📝 <strong>สร้างรายงานใหม่</strong><br><small style="color:#89939d">บันทึกงานพร้อมรูปภาพ</small></div>
-          <div class="quick-item">📅 <strong>ดูปฏิทินงาน</strong><br><small style="color:#89939d">วางแผนและตรวจสอบงาน</small></div>
-          <div class="quick-item">📊 <strong>สรุปผลการทำงาน</strong><br><small style="color:#89939d">ดูสถิติและเวลาที่ใช้</small></div>
-        </div>
-      </div>
-    </section>
-  </main>
+  <section id="calendar" class="view">
+    <div class="top"><div><h1>ปฏิทิน</h1><div class="sub">ดูงานตามวันที่</div></div><div class="actions"><button class="secondary" onclick="changeMonth(-1)">‹</button><button class="secondary" onclick="goToday()">วันนี้</button><button class="secondary" onclick="changeMonth(1)">›</button></div></div>
+    <div class="panel"><div class="panel-head"><div class="panel-title" id="monthTitle"></div></div><div id="calendarGrid" class="calendar"></div></div>
+  </section>
+
+  <section id="settings" class="view">
+    <div class="top"><div><h1>ตั้งค่า</h1><div class="sub">จัดการข้อมูลของ Work Report</div></div></div>
+    <div class="panel">
+      <div class="setting"><div><b>Backup ข้อมูล</b><small>ดาวน์โหลดรายงานทั้งหมดเป็นไฟล์ JSON</small></div><button class="secondary" onclick="backup()">ดาวน์โหลด</button></div>
+      <div class="setting"><div><b>Restore ข้อมูล</b><small>นำไฟล์ JSON กลับเข้าระบบ</small></div><button class="secondary" onclick="document.getElementById('restore').click()">เลือกไฟล์</button></div>
+      <div class="setting"><div><b>ล้างข้อมูลทั้งหมด</b><small>ลบรายงานและรูปภาพจาก Browser เครื่องนี้</small></div><button class="danger" onclick="clearAll()">ล้างข้อมูล</button></div>
+    </div>
+    <input id="restore" type="file" accept="application/json" hidden>
+  </section>
+</main>
 </div>
 
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <div class="modal-head"><div><h2 style="margin:0">เพิ่มรายงานการทำงาน</h2><div class="subtitle">กรอกข้อมูลของงานที่ต้องการบันทึก</div></div><button class="close" onclick="closeModal()">×</button></div>
-    <form id="form" class="form">
-      <div class="field"><label>วันที่</label><input id="date" type="date" required></div>
-      <div class="field"><label>ประเภทงาน</label><select id="type"><option>Graphic Design</option><option>Social Media</option><option>Event</option><option>Signage</option><option>Other</option></select></div>
-      <div class="field"><label>เวลาเริ่ม</label><input id="start" type="time" required></div>
-      <div class="field"><label>เวลาสิ้นสุด</label><input id="end" type="time" required></div>
-      <div class="field full"><label>ชื่องาน</label><input id="title" placeholder="เช่น ออกแบบ Artwork โปรโมชั่นร้านค้า" required></div>
-      <div class="field full"><label>รายละเอียด</label><textarea id="detail" placeholder="รายละเอียดงาน / สิ่งที่ทำ / หมายเหตุ"></textarea></div>
-      <div class="field full"><label>สถานะ</label><select id="status"><option>เสร็จแล้ว</option><option>กำลังทำ</option><option>รอแก้ไข</option></select></div>
-      <div class="field full"><label>รูปภาพผลงาน</label><div class="drop" onclick="document.getElementById('images').click()">📷 คลิกเพื่อเลือกรูปภาพ หรือ ลากไฟล์มาวางที่นี่<input id="images" type="file" accept="image/*" multiple hidden></div><div class="preview" id="preview"></div></div>
-      <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">ยกเลิก</button><button class="primary" type="submit">บันทึกรายงาน</button></div>
-    </form>
-  </div>
-</div>
+<div id="modal" class="modal">
+<div class="modalbox">
+  <div class="modalhead"><div><h2 id="formTitle" style="margin:0">เพิ่มรายงาน</h2><div class="sub">บันทึกงานพร้อมรูปภาพ</div></div><button class="close" onclick="closeForm()">×</button></div>
+  <form id="reportForm" class="form">
+    <input id="editId" type="hidden">
+    <div class="field"><label>วันที่</label><input id="fDate" type="date" required></div>
+    <div class="field"><label>ประเภทงาน</label><select id="fType"><option>ออกแบบกราฟิก</option><option>Social Media</option><option>งานเอกสาร</option><option>ประชุม</option><option>ถ่ายภาพ / วิดีโอ</option><option>อื่นๆ</option></select></div>
+    <div class="field"><label>เวลาเริ่ม</label><input id="fStart" type="time"></div>
+    <div class="field"><label>เวลาสิ้นสุด</label><input id="fEnd" type="time"></div>
+    <div class="field full"><label>ชื่องาน</label><input id="fTitle" required placeholder="เช่น ออกแบบโปสเตอร์ Harat Pub"></div>
+    <div class="field full"><label>รายละเอียดงาน</label><textarea id="fDetail" placeholder="อธิบายสิ่งที่ทำ ผลงาน หรือสิ่งที่ส่งมอบ"></textarea></div>
+    <div class="field"><label>สถานะ</label><select id="fStatus"><option>เสร็จแล้ว</option><option>กำลังทำ</option><option>วางแผน</option></select></div>
+    <div class="field"><label>รูปภาพผลงาน</label><div class="drop">📷 <label style="cursor:pointer">เลือกภาพ<input id="fImages" type="file" accept="image/*" multiple></label><div class="sub">รูปจะถูกบันทึกไว้ใน Browser เครื่องนี้</div></div></div>
+    <div class="full"><div id="previews" class="previews"></div></div>
+    <div class="modalactions full"><button type="button" class="secondary" onclick="closeForm()">ยกเลิก</button><button class="primary">บันทึกรายงาน</button></div>
+  </form>
+</div></div>
+<div id="toast" class="toast"></div>
 
 <script>
-let reports = JSON.parse(localStorage.getItem('workReports') || '[]');
+const KEY='workReportsV2';
+let reports=JSON.parse(localStorage.getItem(KEY)||'[]');
+let monthCursor=new Date(new Date().getFullYear(),new Date().getMonth(),1);
+let pendingImages=[];
+
 const $=id=>document.getElementById(id);
-$('date').valueAsDate=new Date();
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const fmtDate=d=>d?new Date(d+'T00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'}):'-';
+function duration(r){let a=(r.start||'').split(':').map(Number),b=(r.end||'').split(':').map(Number);if(a.length<2||b.length<2||Number.isNaN(a[0])||Number.isNaN(b[0]))return 0;let m=b[0]*60+b[1]-(a[0]*60+a[1]);return m<0?m+1440:m}
+function durText(m){return m?`${Math.floor(m/60)} ชม. ${m%60} นาที`:'-'}
 
-function openModal(){ $('modal').classList.add('show'); }
-function closeModal(){ $('modal').classList.remove('show'); }
-function setPage(btn){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
-$('images').addEventListener('change',e=>{
-  $('preview').innerHTML='';
-  [...e.target.files].forEach(file=>{const r=new FileReader();r.onload=x=>{$('preview').innerHTML+=`<img src="${x.target.result}">`};r.readAsDataURL(file)})
-});
-$('form').addEventListener('submit',e=>{
-  e.preventDefault();
-  const start=$('start').value,end=$('end').value;
-  let mins=0;if(start&&end){let a=start.split(':').map(Number),b=end.split(':').map(Number);mins=(b[0]*60+b[1])-(a[0]*60+a[1]);if(mins<0)mins+=1440}
-  reports.unshift({date:$('date').value,title:$('title').value,type:$('type').value,start,end,mins,status:$('status').value});
-  localStorage.setItem('workReports',JSON.stringify(reports));render();e.target.reset();$('date').valueAsDate=new Date();$('preview').innerHTML='';closeModal();
-});
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>showView(b.dataset.view));
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='reports')renderReports();if(id==='calendar')renderCalendar();if(id==='dashboard')renderDash()}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1800)}
 
-function printReport(index){
-  const r=reports[index];
-  if(!r)return;
-  const w=window.open('','_blank');
-  const date=new Date(r.date+'T00:00').toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
-  const duration=r.mins?`${Math.floor(r.mins/60)} ชั่วโมง ${r.mins%60} นาที`:'-';
-  w.document.write(`<!doctype html><html lang="th"><head><meta charset="UTF-8"><title>รายงานการทำงาน - ${escapeHtml(r.title)}</title>
-  <style>
-  @page{size:A4;margin:16mm}*{box-sizing:border-box}body{font-family:"Segoe UI",Tahoma,sans-serif;color:#202a33;margin:0;font-size:14px}
-  .head{border-bottom:3px solid #2B567B;padding-bottom:14px;margin-bottom:24px}.brand{font-size:24px;font-weight:800;color:#2B567B}.sub{color:#7b8794;margin-top:4px}
-  h1{font-size:22px;margin:20px 0 16px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-  .box{border:1px solid #dfe5ea;border-radius:8px;padding:12px}.label{font-size:11px;color:#7b8794;margin-bottom:5px}.value{font-weight:600}
-  .detail{border:1px solid #dfe5ea;border-radius:8px;padding:16px;min-height:130px;white-space:pre-wrap;line-height:1.7}
-  .status{display:inline-block;border:1px solid #b9d8c8;padding:4px 10px;border-radius:20px;font-size:12px}
-  .footer{margin-top:45px;display:grid;grid-template-columns:1fr 1fr;gap:60px;text-align:center}.line{border-top:1px solid #888;margin-top:55px;padding-top:8px}
-  .print-note{font-size:11px;color:#8a949d;text-align:right;margin-top:20px}
-  </style></head><body>
-  <div class="head"><div class="brand">WORK REPORT</div><div class="sub">รายงานการทำงาน</div></div>
-  <h1>${escapeHtml(r.title)}</h1>
-  <div class="meta">
-    <div class="box"><div class="label">วันที่</div><div class="value">${date}</div></div>
-    <div class="box"><div class="label">ประเภทงาน</div><div class="value">${escapeHtml(r.type)}</div></div>
-    <div class="box"><div class="label">เวลาเริ่ม - สิ้นสุด</div><div class="value">${r.start} - ${r.end}</div></div>
-    <div class="box"><div class="label">ระยะเวลาทำงาน</div><div class="value">${duration}</div></div>
-    <div class="box"><div class="label">สถานะ</div><div class="value"><span class="status">${escapeHtml(r.status)}</span></div></div>
-  </div>
-  <h3>รายละเอียดการทำงาน</h3><div class="detail">${escapeHtml(r.detail||'-')}</div>
-  <div class="footer"><div class="line">ผู้จัดทำรายงาน</div><div class="line">ผู้ตรวจสอบ / ผู้รับรายงาน</div></div>
-  <div class="print-note">จัดทำจากระบบ Work Report</div>
-  <script>window.onload=()=>window.print();</script></body></html>`);
-  w.document.close();
+function openForm(id=null){
+ $('reportForm').reset();pendingImages=[];$('previews').innerHTML='';$('editId').value=id||'';$('fDate').value=new Date().toISOString().slice(0,10);$('formTitle').textContent=id?'แก้ไขรายงาน':'เพิ่มรายงาน';
+ if(id){let r=reports.find(x=>x.id===id);if(!r)return;$('fDate').value=r.date;$('fType').value=r.type;$('fStart').value=r.start||'';$('fEnd').value=r.end||'';$('fTitle').value=r.title;$('fDetail').value=r.detail||'';$('fStatus').value=r.status;pendingImages=r.images||[];renderPreviews()}
+ $('modal').classList.add('show')
 }
-function printAllReports(){
-  if(!reports.length){alert('ยังไม่มีรายงานให้พิมพ์');return;}
-  const w=window.open('','_blank');
-  const total=reports.reduce((a,r)=>a+(r.mins||0),0);
-  const rows=reports.map((r,i)=>`<tr><td>${i+1}</td><td>${new Date(r.date+'T00:00').toLocaleDateString('th-TH')}</td><td>${escapeHtml(r.title)}</td><td>${escapeHtml(r.type)}</td><td>${r.start}-${r.end}</td><td>${r.mins?Math.floor(r.mins/60)+' ชม. '+r.mins%60+' นาที':'-'}</td><td>${escapeHtml(r.status)}</td></tr>`).join('');
-  w.document.write(`<!doctype html><html lang="th"><head><meta charset="UTF-8"><title>สรุปรายงานการทำงาน</title>
-  <style>@page{size:A4 landscape;margin:12mm}body{font-family:"Segoe UI",Tahoma,sans-serif;color:#202a33;font-size:11px}.head{border-bottom:3px solid #2B567B;padding-bottom:10px}.brand{font-size:22px;font-weight:800;color:#2B567B}.sub{color:#7b8794}h2{margin:18px 0 8px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #d8dee3;padding:7px;text-align:left}th{background:#eef3f6}tfoot td{font-weight:700}.summary{margin:10px 0 18px;color:#4d5963}</style></head><body>
-  <div class="head"><div class="brand">WORK REPORT</div><div class="sub">สรุปรายงานการทำงาน</div></div>
-  <h2>สรุปการทำงาน</h2><div class="summary">จำนวนงานทั้งหมด: ${reports.length} รายการ &nbsp; | &nbsp; เวลาทำงานรวม: ${Math.floor(total/60)} ชั่วโมง ${total%60} นาที</div>
-  <table><thead><tr><th>#</th><th>วันที่</th><th>ชื่องาน</th><th>ประเภท</th><th>เวลา</th><th>ระยะเวลา</th><th>สถานะ</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>window.onload=()=>window.print();</script></body></html>`);
-  w.document.close();
-}
+function closeForm(){$('modal').classList.remove('show')}
+$('fImages').onchange=async e=>{for(const f of e.target.files){pendingImages.push(await fileToData(f))}renderPreviews();e.target.value=''}
+function fileToData(file){return new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+function renderPreviews(){$('previews').innerHTML=pendingImages.map((src,i)=>`<div style="position:relative"><img src="${src}"><button type="button" onclick="pendingImages.splice(${i},1);renderPreviews()" style="position:absolute;right:-5px;top:-5px;border:0;border-radius:50%;background:#202a33;color:#fff;width:20px;height:20px">×</button></div>`).join('')}
 
-function render(){
- $('total').textContent=reports.length;
- $('done').textContent=reports.filter(r=>r.status==='เสร็จแล้ว').length;
- $('working').textContent=reports.filter(r=>r.status==='กำลังทำ').length;
- const total=reports.reduce((a,r)=>a+(r.mins||0),0);$('hours').textContent=(total/60).toFixed(1)+' ชม.';
- $('reportTable').innerHTML=reports.length?reports.slice(0,8).map((r,i)=>`<tr><td>${new Date(r.date+'T00:00').toLocaleDateString('th-TH')}</td><td><strong>${escapeHtml(r.title)}</strong><br><small style="color:#9aa4ad">${r.type}</small></td><td>${r.start} - ${r.end}</td><td><span class="badge" style="${r.status!=='เสร็จแล้ว'?'background:#fff5e9;color:#d27a1e':''}">${r.status}</span></td><td><button class="secondary" style="padding:6px 9px;font-size:12px" onclick="printReport(${i})">🖨️</button></td></tr>`).join(''):'<tr><td colspan="5" style="color:#9aa4ad;text-align:center;padding:30px">ยังไม่มีรายงาน — กด “เพิ่มรายงาน” เพื่อเริ่มต้น</td></tr>';
+$('reportForm').onsubmit=e=>{
+ e.preventDefault();let id=$('editId').value||crypto.randomUUID();
+ let r={id,date:$('fDate').value,type:$('fType').value,start:$('fStart').value,end:$('fEnd').value,title:$('fTitle').value.trim(),detail:$('fDetail').value.trim(),status:$('fStatus').value,images:pendingImages};
+ if($('editId').value){let i=reports.findIndex(x=>x.id===id);reports[i]=r}else reports.unshift(r);
+ save();closeForm();renderAll();toast('บันทึกรายงานแล้ว');
 }
-function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-render();
+function save(){localStorage.setItem(KEY,JSON.stringify(reports))}
+function renderAll(){renderDash();renderReports();renderCalendar()}
+function renderDash(){
+ $('statTotal').textContent=reports.length;$('statDone').textContent=reports.filter(r=>r.status==='เสร็จแล้ว').length;$('statWork').textContent=reports.filter(r=>r.status==='กำลังทำ').length;
+ let total=reports.reduce((a,r)=>a+duration(r),0);$('statHours').textContent=(total/60).toFixed(1)+' ชม.';
+ let rs=reports.slice(0,8);$('dashTable').innerHTML=rs.length?`<table><thead><tr><th>วันที่</th><th>งาน</th><th>เวลา</th><th>สถานะ</th><th></th></tr></thead><tbody>${rs.map(r=>row(r)).join('')}</tbody></table>`:'<div class="empty">ยังไม่มีรายงาน<br>กด “เพิ่มรายงาน” เพื่อเริ่มต้น</div>'
+}
+function badge(s){return `<span class="badge ${s==='กำลังทำ'?'work':s==='วางแผน'?'plan':''}">${esc(s)}</span>`}
+function row(r){return `<tr><td>${fmtDate(r.date)}</td><td><b>${esc(r.title)}</b><br><small style="color:#9aa4ad">${esc(r.type)}</small></td><td>${r.start||'-'} - ${r.end||'-'}<br><small>${durText(duration(r))}</small></td><td>${badge(r.status)}</td><td style="white-space:nowrap"><button class="secondary" style="padding:6px 8px" onclick="openForm('${r.id}')">✎</button> <button class="secondary" style="padding:6px 8px" onclick="printOne('${r.id}')">🖨</button> <button class="danger" style="padding:6px 8px" onclick="removeReport('${r.id}')">×</button></td></tr>`}
+function renderReports(){
+ let q=($('search').value||'').toLowerCase(), st=$('filterStatus').value;
+ let rs=reports.filter(r=>(!st||r.status===st)&&(!q||[r.title,r.detail,r.type,r.status].join(' ').toLowerCase().includes(q)));
+ $('reportsTable').innerHTML=rs.length?`<table><thead><tr><th>วันที่</th><th>งาน</th><th>เวลา</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>${rs.map(row).join('')}</tbody></table>`:'<div class="empty">ไม่พบรายงาน</div>'
+}
+function removeReport(id){if(!confirm('ลบรายงานนี้ใช่หรือไม่?'))return;reports=reports.filter(r=>r.id!==id);save();renderAll();toast('ลบรายงานแล้ว')}
+function changeMonth(n){monthCursor.setMonth(monthCursor.getMonth()+n);renderCalendar()}
+function goToday(){monthCursor=new Date(new Date().getFullYear(),new Date().getMonth(),1);renderCalendar()}
+function renderCalendar(){
+ let y=monthCursor.getFullYear(),m=monthCursor.getMonth();$('monthTitle').textContent=monthCursor.toLocaleDateString('th-TH',{month:'long',year:'numeric'});
+ let first=new Date(y,m,1).getDay();first=(first+6)%7;let days=new Date(y,m+1,0).getDate(),prev=new Date(y,m,0).getDate(),out='';
+ ['จ','อ','พ','พฤ','ศ','ส','อา'].forEach(x=>out+=`<div class="cal-head">${x}</div>`);
+ for(let i=0;i<42;i++){let n=i-first+1,dt=new Date(y,m,n),mut=n<1||n>days,num=n<1?prev+n:n>days?n-days:n;let iso=dt.toISOString().slice(0,10);let today=iso===new Date().toISOString().slice(0,10);let rs=reports.filter(r=>r.date===iso);out+=`<div class="day ${mut?'muted':''} ${today?'today':''}"><strong>${num}</strong>${rs.slice(0,3).map(r=>`<span class="dot" title="${esc(r.title)}">• ${esc(r.title)}</span>`).join('')}</div>`}
+ $('calendarGrid').innerHTML=out
+}
+function printOne(id){
+ let r=reports.find(x=>x.id===id);if(!r)return;let w=open('','_blank');let imgs=(r.images||[]).map(x=>`<img src="${x}" style="width:46%;max-height:90mm;object-fit:contain;margin:1%">`).join('');
+ w.document.write(`<!doctype html><html lang="th"><head><meta charset="utf-8"><title>รายงาน - ${esc(r.title)}</title><style>@page{size:A4;margin:14mm}body{font-family:Arial,"Segoe UI",sans-serif;color:#202a33}h1{color:#2B567B;border-bottom:3px solid #2B567B;padding-bottom:10px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{border:1px solid #ddd;padding:10px;border-radius:7px}.lab{font-size:11px;color:#777}.detail{border:1px solid #ddd;border-radius:7px;padding:14px;min-height:100px;white-space:pre-wrap;line-height:1.7}.imgs{display:flex;flex-wrap:wrap;margin-top:10px}.sign{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:55px;text-align:center}.line{border-top:1px solid #777;padding-top:7px;margin-top:45px}</style></head><body><h1>WORK REPORT</h1><h2>${esc(r.title)}</h2><div class="meta"><div class="box"><div class="lab">วันที่</div>${fmtDate(r.date)}</div><div class="box"><div class="lab">ประเภท</div>${esc(r.type)}</div><div class="box"><div class="lab">เวลา</div>${r.start||'-'} - ${r.end||'-'}</div><div class="box"><div class="lab">ระยะเวลา</div>${durText(duration(r))}</div><div class="box"><div class="lab">สถานะ</div>${esc(r.status)}</div></div><h3>รายละเอียด</h3><div class="detail">${esc(r.detail||'-')}</div><div class="imgs">${imgs}</div><div class="sign"><div class="line">ผู้จัดทำรายงาน</div><div class="line">ผู้ตรวจสอบ / ผู้รับรายงาน</div></div><script>onload=()=>print()</script></body></html>`);w.document.close()
+}
+function printAll(){
+ if(!reports.length){alert('ยังไม่มีรายงาน');return}let w=open('','_blank');let rows=reports.map((r,i)=>`<tr><td>${i+1}</td><td>${fmtDate(r.date)}</td><td>${esc(r.title)}</td><td>${esc(r.type)}</td><td>${r.start||'-'}-${r.end||'-'}</td><td>${durText(duration(r))}</td><td>${esc(r.status)}</td></tr>`).join('');let total=reports.reduce((a,r)=>a+duration(r),0);
+ w.document.write(`<!doctype html><html lang="th"><head><meta charset="utf-8"><title>สรุป Work Report</title><style>@page{size:A4 landscape;margin:10mm}body{font-family:Arial,"Segoe UI",sans-serif}h1{color:#2B567B}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:6px;font-size:11px}th{background:#eef3f6;text-align:left}</style></head><body><h1>WORK REPORT</h1><p>จำนวนงาน ${reports.length} รายการ | เวลารวม ${durText(total)}</p><table><thead><tr><th>#</th><th>วันที่</th><th>ชื่องาน</th><th>ประเภท</th><th>เวลา</th><th>ระยะเวลา</th><th>สถานะ</th></tr></thead><tbody>${rows}</tbody></table><script>onload=()=>print()</script></body></html>`);w.document.close()
+}
+function backup(){let blob=new Blob([JSON.stringify(reports,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='work-report-backup.json';a.click();URL.revokeObjectURL(a.href);toast('ดาวน์โหลด Backup แล้ว')}
+$('restore').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;reports=d;save();renderAll();toast('Restore สำเร็จ')}catch{alert('ไฟล์ Backup ไม่ถูกต้อง')}};r.readAsText(f);e.target.value=''}
+function clearAll(){if(!reports.length)return;if(confirm('ต้องการลบรายงานทั้งหมดจริงหรือไม่?')){reports=[];save();renderAll();toast('ล้างข้อมูลแล้ว')}}
+renderAll();
 </script>
 </body>
 </html>
